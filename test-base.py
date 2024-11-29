@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 def get_secret(secret_name):
     client = secretmanager.SecretManagerServiceClient()
-    name = f"projects/970772571927/secrets/test-base-secret/versions/latest"
+    name = f"projects/970772571927/secrets/{secret_name}/versions/latest"
     response = client.access_secret_version(name=name)
     return response.payload.data.decode('UTF-8')
 
