@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from pymongo import MongoClient
 from google.cloud import secretmanager
+from urllib.parse import quote as url_quote
 import os
 
 app = Flask(__name__)
