@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Oops! Something Went Wrong{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="card shadow-lg p-4">
+        <div class="card-body">
+            <h1 class="display-4 text-danger">🚨 Oops!</h1>
+            <p class="lead text-muted">{{ error_message }}</p>
+            <p class="text-muted">Please try again or contact support if the issue persists.</p>
+            <a href="/" class="btn btn-primary mt-3">Go Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

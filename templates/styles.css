@@ -41,3 +41,37 @@
     color: #856404;
     border: none;
 }
+body {
+    background-color: #f8f9fa;
+    font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-outline-info {
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.alert {
+    border-radius: 10px;
+    padding: 20px;
+}
