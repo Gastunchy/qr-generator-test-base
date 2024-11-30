@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}🍓 Home {% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>🍓 Welcome to MongoDB Health Check App 🍓</h1>
+    <p style="font-size: 1.2rem;">Your database status at your fingertips!</p>
+    <div class="d-flex justify-content-center mt-4">
+        <a href="/health" class="btn btn-info btn-lg me-3">🩺 Check Health</a>
+        <a href="/dbinfo" class="btn btn-info btn-lg">📊 View Database Info</a>
+    </div>
+</div>
+{% endblock %}

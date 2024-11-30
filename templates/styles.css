@@ -1,0 +1,43 @@
+.accordion-button {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #ff3d3d;
+    color: white;
+}
+
+.accordion-body {
+    background-color: #fef9f9;
+}
+
+.card-header {
+    background: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 107, 107, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: none;
+}

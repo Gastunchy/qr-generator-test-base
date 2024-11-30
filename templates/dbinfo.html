@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Database Information{% endblock %}
+
+{% block content %}
+<h1 class="text-center">📊 MongoDB Database Information</h1>
+
+{% if db_data %}
+<div class="accordion mt-4" id="databaseAccordion">
+    {% for db_name, collections in db_data.items() %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ loop.index }}">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                {{ db_name }} ({{ collections | length }} collections)
+            </button>
+        </h2>
+        <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#databaseAccordion">
+            <div class="accordion-body">
+                {% if collections %}
+                {% for collection_name, documents in collections.items() %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        📁 {{ collection_name }} ({{ documents | length }} documents)
+                    </div>
+                    <div class="card-body">
+                        {% if documents %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        {% for key in documents[0].keys() %}
+                                        <th>{{ key }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for document in documents %}
+                                    <tr>
+                                        {% for value in document.values() %}
+                                        <td>{{ value }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p>No documents in this collection.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No collections found in this database.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-warning text-center">
+    <h3>No database information available.</h3>
+</div>
+{% endif %}
+{% endblock %}

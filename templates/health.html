@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Health Check{% endblock %}
+
+{% block content %}
+<h1 class="text-center">🩺 MongoDB Health Check</h1>
+
+{% if status == "healthy" %}
+<div class="alert alert-success text-center">
+    <h3>MongoDB is Healthy! 🎉</h3>
+</div>
+<h2>Database Summary:</h2>
+<div class="row">
+    {% for db_name, collections_count in db_summary.items() %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">📂 {{ db_name }}</div>
+            <div class="card-body">
+                <p>Total Collections: <strong>{{ collections_count }}</strong></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-danger text-center">
+    <h3>MongoDB is Unhealthy 💔</h3>
+    <p>{{ error }}</p>
+</div>
+{% endif %}
+{% endblock %}
