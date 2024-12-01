@@ -2,6 +2,9 @@ from flask import Flask, jsonify, render_template, request
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+from google.cloud import secretmanager
+import os
+from pymongo import MongoClient
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
