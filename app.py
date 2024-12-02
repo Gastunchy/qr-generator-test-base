@@ -11,6 +11,9 @@ load_dotenv()
 
 app = Flask(__name__)
 
+config = json.loads(os.getenv('env', '{}'))
+mongo_uri = config.get("mongo_uri")
+
 # Función para obtener el cliente de MongoDB
 def get_mongo_client():
     # Carga el URI de MongoDB directamente desde el archivo .env
