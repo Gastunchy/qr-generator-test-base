@@ -2,15 +2,23 @@ import os
 import json
 from flask import Flask, jsonify, render_template, request
 from pymongo import MongoClient
-from google.cloud import secretmanager
+from google.cloud import secretmanager  # Importa el cliente de Google Secret Manager para gestionar secretos.
 
+# Crea una instancia del cliente de Secret Manager.
 client = secretmanager.SecretManagerServiceClient()
+
+# Define el nombre completo del secreto que se quiere acceder, incluyendo el proyecto, nombre y versión.
+# "latest" indica que se utilizará la versión más reciente del secreto.
 secret_name = "projects/970772571927/secrets/test-base-secret/versions/latest"
+
+# Accede al secreto especificado, obtiene su contenido y lo decodifica de bytes a texto (UTF-8).
 secret = client.access_secret_version(request={"name": secret_name}).payload.data.decode("UTF-8")
+
+# Convierte el contenido del secreto (en formato JSON) en un diccionario de Python para acceder a sus claves y valores.
 env = json.loads(secret)
 
-# Configurar la aplicación Flask
-app = Flask(__name__)
+# Obtiene el valor asociado a la clave "mongo_uri" dentro del diccionario cargado del secreto.
+mongo_uri = env.get("mongo_uri")
 
 
 # Función para obtener el cliente de MongoDB
@@ -19,6 +27,9 @@ def get_mongo_client():
         return MongoClient(mongo_uri)
     except Exception as e:
         raise RuntimeError(f"Error al conectar con MongoDB: {e}")
+
+
+app = Flask(__name__)
 
 @app.route('/')
 def index():
