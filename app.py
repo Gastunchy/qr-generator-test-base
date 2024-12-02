@@ -2,51 +2,12 @@ import os
 import json
 from flask import Flask, jsonify, render_template, request
 from pymongo import MongoClient
-#from dotenv import load_dotenv
 from google.cloud import secretmanager
 
-def load_secret(secret_version_name: str) -> str:
-    """
-    Carga el valor de un secreto desde Google Secret Manager.
-    
-    :param secret_version_name: Nombre completo del secreto.
-    :return: El valor del secreto como una cadena decodificada.
-    :raises RuntimeError: Si no se puede acceder al secreto.
-    """
-    try:
-        client = secretmanager.SecretManagerServiceClient()
-        response = client.access_secret_version(request={"name": secret_version_name})
-        return response.payload.data.decode("UTF-8")
-    except Exception as e:
-        raise RuntimeError(f"Error al acceder al secreto: {e}")
-
-
-def parse_config(env: str) -> dict:
-    """
-    Parsea un JSON de configuración desde una cadena.
-    
-    :param env: Cadena JSON a parsear.
-    :return: Diccionario con la configuración.
-    :raises ValueError: Si la configuración no contiene claves esperadas.
-    :raises json.JSONDecodeError: Si la cadena no es un JSON válido.
-    """
-    config = json.loads(env)
-    if "mongo_uri" not in config:
-        raise ValueError("La clave `mongo_uri` no está configurada en el secreto.")
-    return config
-
-
-# Nombre del secreto en Google Secret Manager
-SECRET_VERSION_NAME = "projects/970772571927/secrets/test-base-secret/versions/latest"
-
-# Cargar el secreto y la configuración
-try:
-    env = load_secret(SECRET_VERSION_NAME)
-    config = parse_config(env)
-    mongo_uri = config["mongo_uri"]
-    print("Configuración cargada exitosamente.")
-except Exception as e:
-    raise RuntimeError(f"Error al inicializar la aplicación: {e}")
+client = secretmanager.SecretManagerServiceClient()
+secret_name = "projects/970772571927/secrets/test-base-secret/versions/latest"
+secret = client.access_secret_version(request={"name": secret_name}).payload.data.decode("UTF-8")
+env = json.loads(secret)
 
 # Configurar la aplicación Flask
 app = Flask(__name__)
